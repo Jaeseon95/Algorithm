@@ -32,15 +32,6 @@ public class Main {
             this.y = y;
             this.z = z;
         }
-
-        @Override
-        public String toString() {
-            return "Planet{" +
-                "x=" + x +
-                ", y=" + y +
-                ", z=" + z +
-                '}';
-        }
     }
 
     static class Edge implements Comparable<Edge> {
@@ -58,15 +49,6 @@ public class Main {
         @Override
         public int compareTo(Edge o) {
             return this.cost - o.cost;
-        }
-
-        @Override
-        public String toString() {
-            return "Edge{" +
-                "from=" + from +
-                ", to=" + to +
-                ", cost=" + cost +
-                '}';
         }
     }
 
@@ -135,72 +117,35 @@ public class Main {
     }
 
     private static void addXEdge(List<Planet> planetList) {
-        // 처음과 마지막은 고정
-        Planet prev = planetList.get(0);
-        Planet current = planetList.get(1);
-        edgePriorityQueue.offer(new Edge(prev.idx, current.idx, Math.abs(prev.x - current.x)));
-        Planet next;
-        int prevCost, nextCost;
-        for (int idx = 1; idx < planetList.size() - 1; idx++) {
-            prev = planetList.get(idx - 1);
-            current = planetList.get(idx);
-            next = planetList.get((idx + 1));
-            prevCost = Math.abs(current.x - prev.x);
-            nextCost = Math.abs(current.x - next.x);
-            edgePriorityQueue.offer(new Edge(current.idx, next.idx, nextCost));
-            edgePriorityQueue.offer(new Edge(prev.idx, current.idx, prevCost));
+        Planet prev, current;
+        for (int idx = 0; idx < planetList.size() - 1; idx++) {
+            prev = planetList.get(idx);
+            current = planetList.get(idx + 1);
+            edgePriorityQueue.offer(new Edge(prev.idx, current.idx, Math.abs(current.x - prev.x)));
         }
-        prev = planetList.get(planetList.size() - 2);
-        current = planetList.get(planetList.size() - 1);
-        edgePriorityQueue.offer(new Edge(prev.idx, current.idx, Math.abs(prev.x - current.x)));
     }
 
     private static void addYEdge(List<Planet> planetList) {
-        // 처음과 마지막은 고정
-        Planet prev = planetList.get(0);
-        Planet current = planetList.get(1);
-        edgePriorityQueue.offer(new Edge(prev.idx, current.idx, Math.abs(prev.y - current.y)));
-        Planet next;
-        int prevCost, nextCost;
-        for (int idx = 1; idx < planetList.size() - 1; idx++) {
-            prev = planetList.get(idx - 1);
-            current = planetList.get(idx);
-            next = planetList.get((idx + 1));
-            prevCost = Math.abs(current.y - prev.y);
-            nextCost = Math.abs(current.y - next.y);
-            edgePriorityQueue.offer(new Edge(current.idx, next.idx, nextCost));
-            edgePriorityQueue.offer(new Edge(prev.idx, current.idx, prevCost));
+        Planet prev, current;
+        for (int idx = 0; idx < planetList.size() - 1; idx++) {
+            prev = planetList.get(idx);
+            current = planetList.get(idx + 1);
+            edgePriorityQueue.offer(new Edge(prev.idx, current.idx, Math.abs(current.y - prev.y)));
         }
-        prev = planetList.get(planetList.size() - 2);
-        current = planetList.get(planetList.size() - 1);
-        edgePriorityQueue.offer(new Edge(prev.idx, current.idx, Math.abs(prev.y - current.y)));
     }
 
     private static void addZEdge(List<Planet> planetList) {
-        // 처음과 마지막은 고정
-        Planet prev = planetList.get(0);
-        Planet current = planetList.get(1);
-        edgePriorityQueue.offer(new Edge(prev.idx, current.idx, Math.abs(prev.z - current.z)));
-        Planet next;
-        int prevCost, nextCost;
-        for (int idx = 1; idx < planetList.size() - 1; idx++) {
-            prev = planetList.get(idx - 1);
-            current = planetList.get(idx);
-            next = planetList.get((idx + 1));
-            prevCost = Math.abs(current.z - prev.z);
-            nextCost = Math.abs(current.z - next.z);
-            edgePriorityQueue.offer(new Edge(current.idx, next.idx, nextCost));
-            edgePriorityQueue.offer(new Edge(prev.idx, current.idx, prevCost));
+        Planet prev, current;
+        for (int idx = 0; idx < planetList.size() - 1; idx++) {
+            prev = planetList.get(idx);
+            current = planetList.get(idx + 1);
+            edgePriorityQueue.offer(new Edge(prev.idx, current.idx, Math.abs(current.z - prev.z)));
         }
-        prev = planetList.get(planetList.size() - 2);
-        current = planetList.get(planetList.size() - 1);
-        edgePriorityQueue.offer(new Edge(prev.idx, current.idx, Math.abs(prev.z - current.z)));
     }
-
+    
     private static void setCompByAxis() {
         compX = (o1, o2) -> o1.x - o2.x;
         compY = (o1, o2) -> o1.y - o2.y;
         compZ = (o1, o2) -> o1.z - o2.z;
     }
-
 }
